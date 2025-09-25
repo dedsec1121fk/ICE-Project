@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICE - Official</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Black+Ops+One&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* Define animation for background and text glow */
+        @keyframes panImage {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                text-shadow: 
+                    0 0 3px rgba(0,0,0,0.9),
+                    0 0 8px rgba(0,0,0,0.8),
+                    0 0 10px #fff, 0 0 20px #00aaff, 0 0 30px #00aaff, 0 0 40px #00aaff;
+            }
+            50% {
+                text-shadow: 
+                    0 0 3px rgba(0,0,0,0.9),
+                    0 0 8px rgba(0,0,0,0.8),
+                    0 0 15px #fff, 0 0 25px #00d5ff, 0 0 40px #00d5ff, 0 0 55px #00d5ff;
+            }
+        }
+
+        /* Lock the page to prevent scrolling */
+        html, body {
+            overflow: hidden;
+            height: 100%;
+        }
+
+        /* Custom styles for the page */
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #020a1a;
+            background-image: url('https://raw.githubusercontent.com/dedsec1121fk/ICE-Project/d12b066fc095a11f57b2dea7fe187b4618dc624c/Assets/Images/ICE%20Building.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-blend-mode: screen;
+            animation: panImage 45s linear infinite;
+        }
+
+        .artist-name {
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-size: clamp(4rem, 15vw, 10rem); /* Slightly smaller to fit better at the top */
+            line-height: 1;
+            color: #fff;
+            animation: pulseGlow 4s ease-in-out infinite;
+            cursor: pointer;
+        }
+        
+        .subtitle-text {
+             text-shadow: 0px 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Even smaller social media buttons */
+        .social-button {
+            background-color: rgba(10, 10, 10, 0.55);
+            border: 2px solid rgba(128, 128, 128, 0.4);
+            width: 72px;
+            height: 72px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.5);
+            transition: all 0.2s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.2rem;
+            cursor: pointer;
+        }
+        
+        .social-button:hover {
+            transform: translateY(-8px);
+            background-color: rgba(10, 10, 10, 0.65);
+            border-color: #00aaff;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 8px 25px rgba(0, 170, 255, 0.4);
+        }
+        
+        .social-button svg {
+            width: 26px;
+            height: 26px;
+            color: #aaa; 
+            transition: all 0.2s ease;
+        }
+
+        .social-button:hover svg {
+            color: #00aaff;
+            filter: drop-shadow(0 0 8px #00aaff);
+        }
+
+        .button-label {
+            font-family: 'Black Ops One', sans-serif;
+            text-transform: uppercase;
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            color: #aaa;
+            transition: all 0.2s ease;
+        }
+
+        .social-button:hover .button-label {
+            color: #fff;
+            text-shadow: 0 0 5px #00aaff;
+        }
+
+        /* Copyright style */
+        .footer-note {
+            position: absolute;
+            bottom: 0.8%;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9em;
+            color: #888;
+            z-index: 11;
+            transition: color 0.3s ease;
+        }
+        .footer-note:hover {
+            color: #fff;
+        }
+
+        /* Message Box styles */
+        .message-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        .message-box {
+            background-color: rgba(20, 20, 20, 0.8);
+            border: 2px solid #00aaff;
+            box-shadow: 0 8px 30px rgba(0, 170, 255, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            color: #eee;
+            font-family: 'Roboto Mono', monospace;
+        }
+        .close-button {
+            margin-top: 1.5rem;
+            padding: 0.5rem 1.5rem;
+            background-color: transparent;
+            border: 2px solid #aaa;
+            color: #aaa;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .close-button:hover {
+            background-color: #00aaff;
+            border-color: #00aaff;
+            color: #000;
+        }
+
+    </style>
+</head>
+<body class="text-white">
+
+    <!-- Main Content: Justify between pushes title to top and buttons to bottom -->
+    <main class="h-full flex flex-col items-center justify-between p-4">
+        
+        <!-- Title and Subtitle container -->
+        <div class="text-center w-full pt-8 md:pt-12">
+            <h1 class="artist-name mb-4" id="artist-title">
+                ICE
+            </h1>
+            <p class="subtitle-text text-xl md:text-2xl text-gray-200 tracking-widest">
+                All Eyes (Still) On ICE
+            </p>
+        </div>
+
+        <!-- Social Media Buttons Layout -->
+        <div class="w-full max-w-xs flex flex-col items-center gap-4 pb-8 md:pb-12">
+            <!-- Top Row -->
+            <div class="flex justify-center gap-4">
+                <a href="https://www.instagram.com/alleyesonice?igsh=MXAzOTlydmU1YmF6MQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="social-button" title="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    <span class="button-label">Insta</span>
+                </a>
+                <a href="https://open.spotify.com/artist/0sgcNsVkYVytrYDfGxm2b0?si=BUqtUBb2TbGtRg1fzwGR3g" target="_blank" rel="noopener noreferrer" class="social-button" title="Spotify">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10z"></path><path d="M7 11.5c2.5-1 5-1.5 7.5-1"></path><path d="M8 14.5c2-0.833 4-1.167 6-1"></path><path d="M9 17.5c1.5-0.5 3-0.833 4.5-0.5"></path></svg>
+                    <span class="button-label">Spotify</span>
+                </a>
+            </div>
+            <!-- Bottom Row -->
+            <div class="flex justify-center gap-4">
+                <a href="https://www.tiktok.com/@alleyesonice?_t=ZN-901SiheDkm6&_r=1" target="_blank" rel="noopener noreferrer" class="social-button" title="TikTok">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v2M16 20h2a2 2 0 0 0 2-2v-2"></path><path d="M16 12A4 4 0 1 0 8 12a4 4 0 0 0 8 0z"></path><path d="M12 12v8"></path><path d="M12 4v4"></path><path d="M8 4H6a2 2 0 0 0-2 2v2"></path><path d="M8 20H6a2 2 0 0 1-2-2v-2"></path></svg>
+                    <span class="button-label">TikTok</span>
+                </a>
+                <div id="events-button" class="social-button" title="Events">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    <span class="button-label">Events</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Copyright Footer -->
+    <div class="footer-note">
+        © 2025 Made by dedsec1121fk.
+    </div>
+
+    <!-- Message Box for Events -->
+    <div id="message-overlay" class="message-overlay">
+        <div class="message-box">
+            <p>No event available at the moment, come back again later.</p>
+            <button id="close-button" class="close-button">Close</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Easter Egg Script
+        const titleElement = document.getElementById('artist-title');
+        let clickCount = 0;
+        let clickTimer = null;
+
+        titleElement.addEventListener('click', () => {
+            clickCount++;
+            if (clickTimer) clearTimeout(clickTimer);
+            if (clickCount === 3) {
+                window.location.href = 'https://www.ded-sec.space';
+                clickCount = 0;
+            } else {
+                clickTimer = setTimeout(() => { clickCount = 0; }, 800);
+            }
+        });
+
+        // Events Button Message Box Script
+        const eventsButton = document.getElementById('events-button');
+        const messageOverlay = document.getElementById('message-overlay');
+        const closeButton = document.getElementById('close-button');
+
+        eventsButton.addEventListener('click', () => {
+            messageOverlay.style.display = 'flex';
+        });
+
+        closeButton.addEventListener('click', () => {
+            messageOverlay.style.display = 'none';
+        });
+
+        // Close message box by clicking on the overlay
+        messageOverlay.addEventListener('click', (event) => {
+            if (event.target === messageOverlay) {
+                messageOverlay.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+
