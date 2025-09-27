@@ -75,6 +75,9 @@ body {
     justify-content: center;
     gap: 0.2rem;
     cursor: pointer;
+    /* --- NEW CSS FOR CIRCULAR BUTTONS --- */
+    border-radius: 50%; 
+    /* ------------------------------------ */
 }
 
 .social-button:hover {
